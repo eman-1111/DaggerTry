@@ -5,7 +5,7 @@ import com.squareup.picasso.Picasso;
 
 import dagger.Component;
 
-@Component
+@Component(modules = {GithubServiceModule.class, PicassoModule.class})
 public interface GithubApplicationComponent {
     Picasso getPicasso();
     GithubService getGithubService();

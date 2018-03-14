@@ -4,13 +4,14 @@ import android.content.Context;
 
 import java.io.File;
 
+import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import timber.log.Timber;
 
-
+@Module(includes = {ContextModule.class})
 public class NetworkModule {
 
     @Provides
