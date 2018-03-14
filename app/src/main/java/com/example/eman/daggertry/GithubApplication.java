@@ -34,13 +34,14 @@ public class GithubApplication extends Application {
 
     private Picasso picasso;
 
+    private GithubApplicationComponent component;
 
     @Override
     public void onCreate() {
         super.onCreate();
         Timber.plant(new Timber.DebugTree());
 
-        GithubApplicationComponent component = DaggerGithubApplicationComponent.builder()
+         component = DaggerGithubApplicationComponent.builder()
                 .contextModule(new ContextModule(this))
                 .build();
 
@@ -53,6 +54,10 @@ public class GithubApplication extends Application {
     }
     public GithubService getGithubService() {
         return githubService;
+    }
+
+    public GithubApplicationComponent component(){
+        return component;
     }
 
 }
