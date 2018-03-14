@@ -29,13 +29,11 @@ public class HomeActivity extends AppCompatActivity {
 
     Call<List<GithubRepo>> reposCall;
 
-
-
+    @Inject
     GithubService githubService;
 
+    @Inject
     AdapterRepos adapterRepos;
-
-    HomeActivityComponent component;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,18 +41,14 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
 
-
-
-         component = DaggerHomeActivityComponent.builder()
+        HomeActivityComponent component = DaggerHomeActivityComponent.builder()
                 .homeActivityModule(new HomeActivityModule(this))
                 .githubApplicationComponent(GithubApplication.get(this).component())
                 .build();
 
-        githubService = component.getGithubService();
-        adapterRepos = component.adapterRepos();
+        component.injectHomeActivity(this);
 
         listView.setAdapter(adapterRepos);
-
 
         reposCall = githubService.getAllRepos();
         reposCall.enqueue(new Callback<List<GithubRepo>>() {
@@ -65,8 +59,8 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<GithubRepo>> call, Throwable t) {
-                Toast.makeText(HomeActivity.this,
-                        "Error getting repos " + t.getMessage(), Toast.LENGTH_LONG).show();
+
+                Toast.makeText(HomeActivity.this, "Error getting repos " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -74,7 +68,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (reposCall != null) {
+        if(reposCall != null) {
             reposCall.cancel();
         }
     }

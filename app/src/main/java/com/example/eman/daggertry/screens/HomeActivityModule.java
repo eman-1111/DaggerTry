@@ -1,7 +1,5 @@
 package com.example.eman.daggertry.screens;
 
-import com.example.eman.daggertry.screens.home.AdapterRepos;
-import com.squareup.picasso.Picasso;
 
 import dagger.Module;
 import dagger.Provides;
@@ -17,7 +15,9 @@ public class HomeActivityModule {
 
     @Provides
     @HomeActivityScope
-    public AdapterRepos adapterRepos(Picasso picasso){
-        return new AdapterRepos(homeActivity, picasso);
+    public HomeActivity homeActivity(){
+        return homeActivity;
     }
 }
+
+
