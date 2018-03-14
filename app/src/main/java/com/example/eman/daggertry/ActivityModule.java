@@ -1,26 +1,26 @@
 package com.example.eman.daggertry;
 
+import android.app.Activity;
 import android.content.Context;
+
+import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
 
-/**
- * Created by Eman on 3/13/2018.
- */
-
 @Module
-public class ContextModule {
-    private final Context context;
+public class ActivityModule {
 
-    public ContextModule(Context context){
+    private final Activity context;
+
+    public ActivityModule(Activity context) {
         this.context = context;
     }
 
     @Provides
     @GithubApplicationScope
-    @ApplicationContext
-    public Context context(){
+    @Named("activity_context")
+    public Context context() {
         return context;
     }
 }
